@@ -25,3 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Removed smart links & smart cards from links.
+
+## [1.1.2] - 2025-06-16
+
+### Fixed
+
+- Use custom version of J2M to fix serveral bold or italic in the same line.

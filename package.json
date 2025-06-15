@@ -1,7 +1,7 @@
 {
 	"name": "n8n-nodes-jira2markdown",
-	"version": "1.1.1",
-	"description": "n8n node to transform Jira into markdown.",
+	"version": "1.1.2",
+	"description": "n8n node to transform Jira into markdown or HTML.",
 	"keywords": [
 		"n8n-community-node-package"
 	],
@@ -37,17 +37,22 @@
 		]
 	},
 	"devDependencies": {
+		"@types/marked": "^5.0.2",
+		"@types/mocha": "^10.0.10",
 		"@typescript-eslint/parser": "~8.32.0",
 		"eslint": "^8.57.0",
 		"eslint-plugin-n8n-nodes-base": "^1.16.3",
 		"gulp": "^5.0.0",
+		"mocha": "^11.6.0",
 		"prettier": "^3.5.3",
-		"typescript": "^5.8.2"
+		"ts-node": "^10.9.2",
+		"typescript": "^5.8.3"
 	},
 	"peerDependencies": {
 		"n8n-workflow": "*"
 	},
 	"dependencies": {
-		"jira2md": "^3.0.1"
+		"marked": "^15.0.12",
+		"marked-smartypants": "^1.1.9"
 	}
 }

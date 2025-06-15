@@ -5,7 +5,7 @@ import type {
 	INodeTypeDescription,
 } from 'n8n-workflow';
 import { NodeConnectionType } from 'n8n-workflow';
-import { to_markdown, to_jira, jira_to_html, md_to_html } from 'jira2md';
+import { J2M } from './J2M';
 
 type Conversion = 'jiraToMarkdown' | 'markdownToJira' | 'jiraToHtml' | 'markdownToHtml';
 
@@ -80,10 +80,10 @@ export class Jira2markdown implements INodeType {
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
 		const conversions: Record<Conversion, (text: string) => string> = {
-			jiraToMarkdown: to_markdown,
-			markdownToJira: to_jira,
-			jiraToHtml: jira_to_html,
-			markdownToHtml: md_to_html,
+			jiraToMarkdown: J2M.to_markdown,
+			markdownToJira: J2M.to_jira,
+			jiraToHtml: J2M.jira_to_html,
+			markdownToHtml: J2M.md_to_html,
 		};
 
 		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
