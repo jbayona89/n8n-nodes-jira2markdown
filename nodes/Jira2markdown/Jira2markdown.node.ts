@@ -100,7 +100,9 @@ export class Jira2markdown implements INodeType {
 			) as string;
 			const item = items[itemIndex];
 
-			item.json[destinationKey] = conversions[conversionType](inputText);
+			item.json[destinationKey] = conversions[conversionType](
+				inputText.replaceAll('|smart-link', '').replaceAll('|smart-card', ''),
+			);
 		}
 
 		return this.prepareOutputData(items);
