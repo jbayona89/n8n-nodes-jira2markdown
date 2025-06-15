@@ -2,7 +2,9 @@
 
 This is an n8n community node. It lets you use _jira2markdown_ in your n8n workflows.
 
-jira2markdown is a node that receives jira markdown and transforms it using [J2M](https://github.com/kylefarris/J2M).
+jira2markdown is a node that receives jira markdown and transforms it standard markdown using [J2M](https://github.com/kylefarris/J2M).
+
+It can also convert from standard markdown to Jira and from markdown or Jira to HTML.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 

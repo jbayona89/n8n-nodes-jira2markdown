@@ -5,7 +5,9 @@ import type {
 	INodeTypeDescription,
 } from 'n8n-workflow';
 import { NodeConnectionType } from 'n8n-workflow';
-import { to_markdown, to_jira } from 'jira2md';
+import { to_markdown, to_jira, jira_to_html, md_to_html } from 'jira2md';
+
+type Conversion = 'jiraToMarkdown' | 'markdownToJira' | 'jiraToHtml' | 'markdownToHtml';
 
 export class Jira2markdown implements INodeType {
 	description: INodeTypeDescription = {
@@ -39,6 +41,16 @@ export class Jira2markdown implements INodeType {
 						value: 'markdownToJira',
 						description: 'Converts standard Markdown to Jira Wiki Markup',
 					},
+					{
+						name: 'From Jira to HTML',
+						value: 'jiraToHtml',
+						description: 'Converts Jira Wiki Markup to HTML',
+					},
+					{
+						name: 'From Markdown to HTML',
+						value: 'markdownToHtml',
+						description: 'Converts standard markdown to HTML',
+					},
 				],
 				description: 'Select the desired conversion direction',
 			},
@@ -67,13 +79,19 @@ export class Jira2markdown implements INodeType {
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
+		const conversions: Record<Conversion, (text: string) => string> = {
+			jiraToMarkdown: to_markdown,
+			markdownToJira: to_jira,
+			jiraToHtml: jira_to_html,
+			markdownToHtml: md_to_html,
+		};
 
 		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
 			const conversionType = this.getNodeParameter(
 				'conversionType',
 				itemIndex,
 				'jiraToMarkdown',
-			) as string;
+			) as Conversion;
 			const inputText = this.getNodeParameter('inputText', itemIndex, '') as string;
 			const destinationKey = this.getNodeParameter(
 				'destinationKey',
@@ -82,8 +100,7 @@ export class Jira2markdown implements INodeType {
 			) as string;
 			const item = items[itemIndex];
 
-			item.json[destinationKey] =
-				conversionType === 'jiraToMarkdown' ? to_markdown(inputText) : to_jira(inputText);
+			item.json[destinationKey] = conversions[conversionType](inputText);
 		}
 
 		return this.prepareOutputData(items);
